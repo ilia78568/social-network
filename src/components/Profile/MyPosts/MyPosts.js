@@ -3,12 +3,8 @@ import styles from './MyPosts.module.css'
 import Post from './Post/Post'
 
 
-const MyPosts = () => {
-  let postData = [
-    {message: 'lallalaal', likeCount: 13},
-    {message: 'it is my first post', likeCount: 0},
-    {message: 'do u like anime', likeCount: 103}
-  ]
+const MyPosts = ({postData}) => {
+ 
   let posts = postData.map(elem => <Post message={elem.message} likeCount={elem.likeCount}/>)
   return (
     <div className="posts">
