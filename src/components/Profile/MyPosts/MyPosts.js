@@ -4,6 +4,12 @@ import Post from './Post/Post'
 
 
 const MyPosts = () => {
+  let postData = [
+    {message: 'lallalaal', likeCount: 13},
+    {message: 'it is my first post', likeCount: 0},
+    {message: 'do u like anime', likeCount: 103}
+  ]
+  let posts = postData.map(elem => <Post message={elem.message} likeCount={elem.likeCount}/>)
   return (
     <div className="posts">
       My post
@@ -11,9 +17,7 @@ const MyPosts = () => {
         <textarea></textarea>
         <button>Add post</button>
       </div>
-      <Post message='Hi how are you' likeCount={13}/>
-      <Post message='it is my first post'likeCount={0}/>
-      <Post message='do u like me? ' likeCount={103}/>
+      {posts}
     </div>
 
   )
