@@ -1,0 +1,17 @@
+.dialogs {
+ display: flex;
+ 
+}
+.dialog {
+    display:flex;
+}
+.dialogsItems {
+ padding: 10px;
+}
+.messages {
+    padding: 10px;
+
+}
+.message {
+
+}
