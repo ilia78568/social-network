@@ -2,15 +2,14 @@ import React from 'react'
 import styles from './Post.module.css'
 
 
-const Post = () => {
+const Post = ({message, likeCount}) => {
   return (
     <div className={styles.item}>
     <img src="https://i.pinimg.com/originals/4d/af/2f/4daf2f183af331a8ba9a12bc2a458486.jpg"></img>
-    Pos1
+    {message}
     <div>
-        <span>Like</span>
+  <span>Like {likeCount}</span>
     </div>
-    
   </div>
   )
 }
