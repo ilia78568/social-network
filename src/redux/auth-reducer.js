@@ -1,5 +1,4 @@
 const SET_USER_DATA = 'SET-USER-DATA';
-const UNFOLLOW = 'UNFOLLOW'
 
 let initialState =   {
     userId: null,
