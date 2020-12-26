@@ -5,7 +5,7 @@ import Users from './Users'
 import Preloader from '../common/Preloader/Preloader'
 import {withAuthRedirect} from '../../hoc/withAuthRedirect'
 import {compose} from 'redux'
-import { getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, getTotalUserCount, getUser } from '../../redux/users-selectors'
+import { getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, getPortionSize, getTotalUserCount, getUser } from '../../redux/users-selectors'
 
 class UsersContainer extends React.Component {
 
@@ -32,6 +32,7 @@ class UsersContainer extends React.Component {
                         follow = {this.props.follow}
                         unfollow = {this.props.unfollow}
                         followingInProgress = {this.props.followingInProgress}
+                        portionSize={this.props.portionSize}
                         /> </>)
     }
 }
@@ -44,6 +45,7 @@ let mapStateToProps = (state) => {
         currentPage: getCurrentPage(state), 
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),
+        portionSize: getPortionSize(state)
     }
 }
 export default compose(
