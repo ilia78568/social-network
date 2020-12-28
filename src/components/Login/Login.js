@@ -26,6 +26,10 @@ const LoginForm = (props) => {
                     validate={[]}
                     component={Input} name={'rememberMe'} type={'checkbox'}/> remember me
                 </div>
+                {props.captchaUrl && <img src={props.captchaUrl}/>}
+                {props.captchaUrl && <Field 
+                    validate={[required]}
+                    placeholder={'symbols'} name={'captcha'} component={Input}/>}
 
                 {props.error && <div className={styles.formSummaryError}>
                     {props.error}
@@ -44,7 +48,7 @@ const LoginReduxForm = reduxForm({
 const Login = (props) => {
 
     const onSubmit = (formData) => {
-        props.login(formData.email, formData.password, formData.rememberMe)
+        props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
     if(props.isAuth) {
@@ -54,14 +58,15 @@ const Login = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <LoginReduxForm captchaUrl={props.captchaUrl} onSubmit={onSubmit}/>
         </div>
     )
 }
 
 const mstp = (state) => (
     {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        captchaUrl: state.auth.captchaUrl
     }
 )
 

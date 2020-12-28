@@ -1,13 +1,16 @@
-import {authAPI} from '../api/api'
+import {authAPI, securityAPI} from '../api/api'
 import {stopSubmit} from 'redux-form'
 
 const SET_USER_DATA = 'samurai-network/auth/SET-USER-DATA';
+const GET_CAPTCHA_URL = 'samurai-network/auth/GET-CAPTCHA-URL';
+
 
 let initialState =   {
     userId: null,
     email: null,
     login: null,
-    isAuth: false
+    isAuth: false,
+    captchaUrl: null
 }
 
 const authReducer = (state = initialState, action) => {
@@ -18,13 +21,19 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 ...action.payload,
             }
-
+        case GET_CAPTCHA_URL: 
+            return {
+                ...state,
+                ...action.captchaUrl
+            }
         default:
             return state;
     }
 }
 
 export const setAuthUserData = (userId, email, login, isAuth) => ({type: SET_USER_DATA, payload: {userId, email, login, isAuth}})
+export const getCaptchaUrl = (captchaUrl) => ({type: GET_CAPTCHA_URL, captchaUrl})
+
 
 export const getAuthUserData = () => async (dispatch) => {
     const res = await authAPI.me()
@@ -37,15 +46,25 @@ export const getAuthUserData = () => async (dispatch) => {
 
 export const login = (email, password, rememberMe) => async (dispatch) => {
     
-    let res = await authAPI.login(email,password,rememberMe)
+    let res = await authAPI.login(email,password,rememberMe, captcha)
        
         if(res.data.resultCode === 0) {
             dispatch(getAuthUserData())
         }
         else {
+            if(res.data.resultCode === 10) {
+                dispatch(getCaptchaUrl)
+            }
             let message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
             dispatch(stopSubmit('login', {_error: message}))
         }
+}
+
+export const getCaptchaUrl = () => async (dispatch) => {
+    let res = await securityAPI.getCaptchaUrl()
+    const captchaUrl = res.data.url
+            
+    dispatch(getCaptchaUrl(captchaUrl))
 }
 
 export const logout = () => async (dispatch) => {
