@@ -48,6 +48,9 @@ export const profileAPI = {
                 'Content-Type': 'multipart/form-data'
               }
         })
+    },
+    saveProfile(profile) {
+        return instance.put(`profile`, profile)
     }
 }
 
@@ -62,7 +65,3 @@ export const authAPI = {
         return instance.delete('auth/login')
     }
 }
-// export const follow = (currentPage, pageSize) => {
-//     return instance.get(`follow/${elem.id}`)
-//             .then(res => res.data)
-// }
