@@ -24,7 +24,7 @@ const authReducer = (state = initialState, action) => {
         case GET_CAPTCHA_URL: 
             return {
                 ...state,
-                ...action.captchaUrl
+                ...action.payload
             }
         default:
             return state;
@@ -32,7 +32,7 @@ const authReducer = (state = initialState, action) => {
 }
 
 export const setAuthUserData = (userId, email, login, isAuth) => ({type: SET_USER_DATA, payload: {userId, email, login, isAuth}})
-export const getCaptchaUrl = (captchaUrl) => ({type: GET_CAPTCHA_URL, captchaUrl})
+export const getCaptchaUrlAC = (captchaUrl) => ({type: GET_CAPTCHA_URL, payload: captchaUrl})
 
 
 export const getAuthUserData = () => async (dispatch) => {
@@ -44,7 +44,7 @@ export const getAuthUserData = () => async (dispatch) => {
     }
 }
 
-export const login = (email, password, rememberMe) => async (dispatch) => {
+export const login = (email, password, rememberMe, captcha) => async (dispatch) => {
     
     let res = await authAPI.login(email,password,rememberMe, captcha)
        
@@ -64,7 +64,7 @@ export const getCaptchaUrl = () => async (dispatch) => {
     let res = await securityAPI.getCaptchaUrl()
     const captchaUrl = res.data.url
             
-    dispatch(getCaptchaUrl(captchaUrl))
+    dispatch(getCaptchaUrlAC(captchaUrl))
 }
 
 export const logout = () => async (dispatch) => {
