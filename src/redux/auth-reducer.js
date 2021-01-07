@@ -53,7 +53,7 @@ export const login = (email, password, rememberMe, captcha) => async (dispatch) 
         }
         else {
             if(res.data.resultCode === 10) {
-                dispatch(getCaptchaUrl)
+                dispatch(getCaptchaUrl())
             }
             let message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
             dispatch(stopSubmit('login', {_error: message}))
